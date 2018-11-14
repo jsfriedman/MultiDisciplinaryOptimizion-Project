@@ -92,4 +92,4 @@ global couplings;
 
 
 %% fmincon
-[x,FVAL,EXITFLAG,OUTPUT] = fmincon(FUN,X0,A,B,Aeq,Beq,LB,UB,NONLCON,OPTIONS);
+[x,FVAL,EXITFLAG,OUTPUT] = fmincon(FUN,x0,[],[],[],[],LB,UB,NONLCON,options);
