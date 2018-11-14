@@ -5,7 +5,7 @@ global couplings;
 
 %% Inequality constraints
 % transform to the form of "0 >= [whatever was greater than zero]"
-c_fueltank = W_fuel - (0.81715e3 * V_tank * 0.93);
+c_fueltank = W_fuel - (0.81715e3 * calcTankVolume(x) * 0.93);
 
 %% Equality constraints
 
