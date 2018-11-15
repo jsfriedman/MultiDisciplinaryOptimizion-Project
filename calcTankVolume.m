@@ -63,6 +63,17 @@ function[KinkCST,Xt_r,Xl_r,Xt_k,Xl_k,Xt_t,Xl_t,Xt_85,Xl_85] = AFinterp(RootCST,T
     x0 = 0*ones(M,1);     %initial value of design vector x(starting vector for search process)
     lb = -1*ones(M,1);    %upper bound vector of x
     ub = 1*ones(M,1);     %lower bound vector of x
+    
+    %% Optimization Options
+    options.Display         = 'off';
+    options.Algorithm       = 'sqp';
+    options.FunValCheck     = 'on';
+    options.DiffMinChange   = 1e-6;         % Minimum change while gradient searching
+    options.DiffMaxChange   = 5e-2;         % Maximum change while gradient searching
+    options.TolCon          = 1e-6;         % Maximum difference between two subsequent constraint vectors [c and ceq]
+    options.TolFun          = 1e-6;         % Maximum difference between two subsequent objective value
+    options.TolX            = 1e-6;         % Maximum difference between two subsequent design vectors
+    options.MaxIter         = 1e3;          % Maximum iterations
 
     %perform optimization
     [x,~,~] = fmincon(@CST_objective_kink,x0,[],[],[],[],lb,ub,[],options);
