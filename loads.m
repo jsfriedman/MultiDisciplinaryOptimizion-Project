@@ -1,6 +1,6 @@
 function [ccL, cM] = loads(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     theta_root, theta_kink, theta_tip, W_fuel_c, W_wing_c)
-
+%% Un-normalize
     for i = 1:12
         A_root(i,1) = A_root(i,1) * initial_values(i);
         A_tip(i,1) = A_tip(i,1) * initial_values(i+12);
@@ -16,6 +16,7 @@ function [ccL, cM] = loads(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,.
     W_fuel_c = W_fuel_c * initial_values(37);
     W_wing_c = W_wing_c * initial_values(38);
 
+%% Get Kinky
     global kink;
     kink.CST = KinkCST;
     kink.x_root_upper= Xt_r;
@@ -30,6 +31,8 @@ function [ccL, cM] = loads(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,.
     x_kink = 10.36/tand(90-lambda_1);
     x_tip = x_kink + (J-10.36)/(tand(90-lambda_2));
     c_kink = c_root - x_kink + 0.02;
+
+%% Normal Q3D stuff
     % Wing planform geometry 
     %                x    y     z   chord(m)    twist angle (deg) 
     AC.Wing.Geom = [0, 0, 0, c_root, theta_root;
@@ -72,7 +75,8 @@ function [ccL, cM] = loads(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,.
     %AC.Aero.Alpha = 2;             % angle of attack -  comment this line to run the code for given cl 
 
     Res = Q3D_solver(AC);
-    
+
+%% Write EMWET .load file for next run 
     AS.Y = linspace(0,1,20);
     AS.L = interp1(Res.Wing.Yst,Res.Wing.ccl*q,AS.Y*J,'spline'); %lift distribution
     AS.T = interp1(Res.Wing.Yst,Res.Wing.cm_c4.*Res.Wing.chord*q*MAC,AS.Y*J,'spline'); % pitching moment distribution

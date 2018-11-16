@@ -1,7 +1,6 @@
 function [L, D] = aero(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     theta_root, theta_kink, theta_tip, W_fuel_c, W_wing_c)
-    %% Aerodynamic solver setting
-
+%% Un-normalize
     for i = 1:12
         A_root(i,1) = A_root(i,1) * initial_values(i);
         A_tip(i,1) = A_tip(i,1) * initial_values(i+12);
@@ -16,7 +15,8 @@ function [L, D] = aero(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     theta_tip = theta_tip * initial_values(32);
     W_fuel_c = W_fuel_c * initial_values(37);
     W_wing_c = W_wing_c * initial_values(38);
-
+    
+%% Get Kinky 
     [KinkCST,Xt_r,Xl_r,Xt_k,Xl_k,Xt_t,Xl_t,Xt_85,Xl_85] = AFinterp(A_root,A_tip,J);
     global kink;
     kink.CST = KinkCST;
@@ -32,6 +32,8 @@ function [L, D] = aero(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     x_kink = 10.36/tand(90-lambda_1);
     x_tip = x_kink + (J-10.36)/(tand(90-lambda_2));
     c_kink = c_root - x_kink + 0.02;
+    
+%% Back to Q3D things
     % Wing planform geometry 
     %                x    y     z   chord(m)    twist angle (deg) 
     AC.Wing.Geom = [0, 0, 0, c_root, theta_root;
@@ -75,7 +77,37 @@ function [L, D] = aero(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     %AC.Aero.Alpha = 2;             % angle of attack -  comment this line to run the code for given cl 
 
     Res = Q3D_solver(AC);
-    
+
+%% Results 
     L = Res.CLwing*qc*S;
     D = Res.CDwing*qc*S;
+    
+%% Write EMWET .init file for next run
+    fid = fopen('MD11.init', 'wt');   
+    fprintf(fid,'%g %g\n',WTO_max, (W_wing_c+base_weight) );
+    fprintf(fid,'%g\n',2.5);
+    fprintf(fid,'%g %g %g %g\n',S,2*J,3,3);
+
+    fprintf(fid,'%g %s\n',0,'MD11_root');
+    fprintf(fid,'%g %s\n',(10.36/J),'MD11_kink');
+    fprintf(fid,'%g %s\n',1,'MD11_tip');
+
+    fprintf(fid,'%g %g %g %g %g %g\n',c_root,0,0,0,0.15,0.6); 
+    fprintf(fid,'%g %g %g %g %g %g\n',c_kink,x_kink,10.36,0,0.15,0.6); 
+    fprintf(fid,'%g %g %g %g %g %g\n',c_tip,x_tip,J,0,0.15,0.6); 
+
+    fprintf(fid,'%g %g\n',0,0.85);
+    fprintf(fid,'%g\n',1);
+
+    fprintf(fid,'%g %g\n',0.308,4300);
+
+    fprintf(fid,'%g %g %g %g\n',7e10,2800,295e6,295e6);
+    fprintf(fid,'%g %g %g %g\n',7e10,2800,295e6,295e6);
+    fprintf(fid,'%g %g %g %g\n',7e10,2800,295e6,295e6);
+    fprintf(fid,'%g %g %g %g\n',7e10,2800,295e6,295e6);
+
+    fprintf(fid,'%g %g\n',0.96,0.5);
+    fprintf(fid,'%g\n',0);
+
+    fclose(fid);
 end
