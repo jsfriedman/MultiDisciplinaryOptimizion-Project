@@ -40,19 +40,13 @@ J = 25.9;
 theta_root = 0;
 theta_kink = 0;
 theta_tip = 0;
-W_fuel = 106250;
-W_wing = false;
-L = false;
-D = false;
-ccL = false;
-cM = false;
 
-L_c = false;
-D_c = false;
+L_c = 2.3077e6;
+D_c = 1.4423e5;
 ccL_c = false;
 cM_c = false;
-W_fuel_c = false;
-W_wing_c = false;
+W_fuel_c = 88677;
+W_wing_c = 40606.6;
 
 %% Design Variable
 x0 = [root_upper1, root_upper2, root_upper3, root_upper4, root_upper5, root_upper6,...
@@ -60,7 +54,7 @@ x0 = [root_upper1, root_upper2, root_upper3, root_upper4, root_upper5, root_uppe
       tip_upper1, tip_upper2, tip_upper3, tip_upper4, tip_upper5, tip_upper6,...
       tip_lower1, tip_lower2, tip_lower3, tip_lower4, tip_lower5, tip_lower6,...
       c_root, c_tip, lambda_1, lambda_2, J, theta_root, theta_kink, theta_tip,...
-      W_fuel, W_wing, L, D, ccL, cM, L_c, D_c, ccL_c, cM_c, W_fuel_c, W_wing_c];
+      L_c, D_c, ccL_c, cM_c, W_fuel_c, W_wing_c];
 
 %% Bounds
 lower_bounds = [0.1462, 0.2420, 0.1586, 0.2896, 0.1520, 0.2786,...
@@ -68,14 +62,14 @@ lower_bounds = [0.1462, 0.2420, 0.1586, 0.2896, 0.1520, 0.2786,...
       0.0988, 0.1745, 0.0865, 0.2404, 0.1106, 0.2517,...
       -0.0591, -0.0508, -0.1539, 0.0764, -0.0272, 0.1623,...
       12.4, 2.9, 28, 28, 20, -15,-15, -15, ...
-      62500, W_wing, L, D, ccL, cM, L_c, D_c, ccL_c, cM_c, 62500, W_wing_c]; % same order as in the design variable
+      1846160, 115384, ccL_c, cM_c, 62500, 32e3]; % same order as in the design variable
   
 upper_bounds = [0.2015, 0.3209, 0.2427, 0.3471, 0.2001, 0.3099,...
       -0.0750, -0.0732, -0.1780, 0.0600, -0.0410, 0.1533,...
       0.1304, 0.2195, 0.1346, 0.2732, 0.1382, 0.2696,...
       -0.0276, -0.0057, -0.1058, 0.1902, 0.0003, 0.1802,...
       18.6, 4.5, 42, 42, 35, 15,15, 15,...
-      150e3, W_wing, L, D, ccL, cM, L_c, D_c, ccL_c, cM_c, 150e3, W_wing_c]; % same order as in the design variable
+      2769240, 173076, ccL_c, cM_c, 150e3, 49e3]; % same order as in the design variable
 
 %% Initial Constraint Values
 
@@ -90,6 +84,7 @@ options.TolCon          = 1e-6;         % Maximum difference between two subsequ
 options.TolFun          = 1e-6;         % Maximum difference between two subsequent objective value
 options.TolX            = 1e-6;         % Maximum difference between two subsequent design vectors
 options.MaxIter         = 1e3;          % Maximum iterations
+options.PlotFcns        = {@optimplotfval, @optimplotx, @optimplotfirstorderopt};
 
 
 %% Global Variables

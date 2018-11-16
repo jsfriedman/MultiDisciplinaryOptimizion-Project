@@ -1,3 +1,10 @@
 function [W_wing] = weight()
-    W_wing = 0;
+    EMWET MD11;
+    
+    fid     = fopen('MD11.weight', 'r');
+    OUT = textscan(fid, '%s'); 
+    fclose(fid);
+
+    out = OUT{1};
+    W_wing = str2double(out(4));
 end
