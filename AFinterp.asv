@@ -53,31 +53,6 @@ function[KinkCST,Xt_r,Xl_r,Xt_k,Xl_k,Xt_t,Xl_t,Xt_85,Xl_85] = AFinterp(RootCST,T
     Xl_85 = Xl_tank;
     
     % write the .dat files for the airfoils (x3)
-    fid = fopen('MD11_root.dat', 'w');  
-    for i=length(Xt_r(:,1)):-1:1
-        fprintf(fid,'%g %g\n',Xt_r(i,1),Xt_r(i,2));
-    end
-    for i=1:length(Xl_r)
-        fprintf(fid,'%g %g\n',Xl_r(i,1),Xl_r(i,2));
-    end
-    fclose(fid);
-
-    fid = fopen('MD11_kink.dat', 'w');  
-    for i=length(Xt_k(:,1)):-1:1
-        fprintf(fid,'%g %g\n',Xt_k(i,1),Xt_k(i,2));
-    end
-    for i=1:length(Xl_r)
-        fprintf(fid,'%g %g\n',Xl_k(i,1),Xl_k(i,2));
-    end
-    fclose(fid);
-
-    fid = fopen('MD11_tip.dat', 'w');  
-    for i=length(Xt_t(:,1)):-1:1
-        fprintf(fid,'%g %g\n',Xt_t(i,1),Xt_t(i,2));
-    end
-    for i=1:length(Xl_r)
-        fprintf(fid,'%g %g\n',Xl_t(i,1),Xl_t(i,2));
-    end
-    fclose(fid);
+    % 
     
 end
