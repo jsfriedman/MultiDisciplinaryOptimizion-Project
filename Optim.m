@@ -89,7 +89,4 @@ function [f] = Optim(x)
     couplings.cM6_c = cM6_c;
     couplings.cM7_c = cM7_c;
     couplings.cM8_c = cM8_c;
-    % evaluate constraints
-    %[c,ceq] = constraints(x);
-   disp('couplings have been updated')
 end

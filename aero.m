@@ -1,10 +1,10 @@
 function [L, D] = aero(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     theta_root, theta_kink, theta_tip, W_fuel_c, W_wing_c)
 %% Un-normalize
-%     for i = 1:12
-%         A_root(i,1) = A_root(i,1) * initial_values(i);
-%         A_tip(i,1) = A_tip(i,1) * initial_values(i+12);
-%     end 
+    for i = 1:12
+        A_root(i,1) = A_root(i,1) * initial_values(i);
+        A_tip(i,1) = A_tip(i,1) * initial_values(i+12);
+    end 
     c_root = c_root * initial_values(25);
     c_tip = c_tip * initial_values(26);
     lambda_1 = lambda_1 * initial_values(27);
