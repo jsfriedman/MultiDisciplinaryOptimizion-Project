@@ -1,8 +1,8 @@
 function [V_tank] = calcTankVolume(x) 
-    c_root = x(25);
-    c_tip = x(26);
-    lambda1 = x(27);
-    J = x(29);
+    c_root = x(25) * initial_values(25);
+    c_tip = x(26) * initial_values(26);
+    lambda1 = x(27) * initial_values(27);
+    J = x(29) * initial_values(29);
 
     global kink;
     Xt_r = kink.x_root_upper;

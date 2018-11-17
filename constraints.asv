@@ -1,18 +1,68 @@
 function [c,ceq] = constraints(x)
-% design variables, x, need to be passed in to constraints function for
-% fmincon to work
-global couplings;
+    % design variables, x, need to be passed in to constraints function for
+    % fmincon to work
+    global couplings;
+    L = couplings.L;
+    L_c = couplings.L_c;
+    D = couplings.D;
+    D_c = couplings.D_c;
+    W_wing = couplings.W_wing;
+    W_wing_c = couplings.W_wing_c;
+    W_fuel = couplings.W_fuel;
+    W_fuel_c = couplings.W_fuel_c;
+    ccL = couplings.ccL;
+    ccL_c = couplings.ccL_c;
+    cM = couplings.cM;
+    cM_c = couplings.cM_c;
+    ccL1 = couplings.ccL1;
+    ccL2 = couplings.ccL2;
+    ccL3 = couplings.ccL3;
+    ccL4 = couplings.ccL4;
+    ccL5 = couplings.ccL5;
+    ccL6 = couplings.ccL6;
+    ccL7 = couplings.ccL7;
+    ccL8 = couplings.ccL8;
+    cM1 = couplings.cM1;
+    cM2 = couplings.cM2;
+    cM3 = couplings.cM3;
+    cM4 = couplings.cM4;
+    cM5 = couplings.cM5;
+    cM6 = couplings.cM6;
+    cM7 = couplings.cM7;
+    cM8 = couplings.cM8;
+    ccL1_c = couplings.ccL1_c;
+    ccL2_c = couplings.ccL2_c
+    ccL3_c = couplings.ccL3_c
+    ccL4_c = couplings.ccL4_c
+    ccL5_c = couplings.ccL5_c
+    ccL6_c = couplings.ccL6_c
+    ccL7_c = couplings.ccL7_c
+    ccL8_c = couplings.ccL8_c
+    couplings.cM1_c
+    couplings.cM2_c
+    couplings.cM3_c
+    couplings.cM4_c
+    couplings.cM5_c
+    couplings.cM6_c
+    couplings.cM7_c
+    couplings.cM8_c
 
+    %% Inequality constraints
+    % transform to the form of "0 >= [whatever was greater than zero]"
+    c_fueltank = W_fuel - (0.81715e3 * calcTankVolume(x) * 0.93);
 
-c1 = 3.16 - y1;
+    %% Equality constraints
 
-lift_consistency = L-L_c;
-drag_consistency = D-D_c;
-ccL_consistency = ccL ;
-cM_consistency = 
-wingweight_consistency
-fuelweight_consistency
+    %% consistency constraints
+    lift_consistency = L-L_c;
+    drag_consistency = D-D_c;
+    ccL_consistency = ccL - ccL_c;
+    cM_consistency = cM - cM_c;
+    wingweight_consistency = W_wing - W_wing_c;
+    fuelweight_consistency = W_fuel - W_fuel_c;
 
-c = [c1,c2];
-ceq = [lift_consistency, c_eq2];
+    %% formatting answers for fmincon
+    c = [c_fueltank];
+    ceq = [lift_consistency, drag_consistency, ccL_consistency,...
+        cM_consistency, wingweight_consistency ,fuelweight_consistency];
 end

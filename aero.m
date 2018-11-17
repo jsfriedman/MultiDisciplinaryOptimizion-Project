@@ -1,10 +1,10 @@
 function [L, D] = aero(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     theta_root, theta_kink, theta_tip, W_fuel_c, W_wing_c)
 %% Un-normalize
-    for i = 1:12
-        A_root(i,1) = A_root(i,1) * initial_values(i);
-        A_tip(i,1) = A_tip(i,1) * initial_values(i+12);
-    end 
+%     for i = 1:12
+%         A_root(i,1) = A_root(i,1) * initial_values(i);
+%         A_tip(i,1) = A_tip(i,1) * initial_values(i+12);
+%     end 
     c_root = c_root * initial_values(25);
     c_tip = c_tip * initial_values(26);
     lambda_1 = lambda_1 * initial_values(27);
@@ -13,8 +13,8 @@ function [L, D] = aero(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,...
     theta_root = theta_root * initial_values(30);
     theta_kink = theta_kink * initial_values(31);
     theta_tip = theta_tip * initial_values(32);
-    W_fuel_c = W_fuel_c * initial_values(37);
-    W_wing_c = W_wing_c * initial_values(38);
+    W_fuel_c = W_fuel_c * initial_values(35);
+    W_wing_c = W_wing_c * initial_values(36);
     
 %% Get Kinky 
     [KinkCST,Xt_r,Xl_r,Xt_k,Xl_k,Xt_t,Xl_t,Xt_85,Xl_85] = AFinterp(A_root,A_tip,J);

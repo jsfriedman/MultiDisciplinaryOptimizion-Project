@@ -13,20 +13,12 @@ function [ccL, cM] = loads(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,.
     theta_root = theta_root * initial_values(30);
     theta_kink = theta_kink * initial_values(31);
     theta_tip = theta_tip * initial_values(32);
-    W_fuel_c = W_fuel_c * initial_values(37);
-    W_wing_c = W_wing_c * initial_values(38);
+    W_fuel_c = W_fuel_c * initial_values(35);
+    W_wing_c = W_wing_c * initial_values(36);
 
 %% Get Kinky
     global kink;
-    kink.CST = KinkCST;
-    kink.x_root_upper= Xt_r;
-    kink.x_root_lower = Xl_r;
-    kink.x_kink_upper = Xt_k;
-    kink.x_kink_lower = Xl_k;
-    kink.x_tip_upper = Xt_t;
-    kink.x_tip_lower = Xl_t;
-    kink.x85_upper = Xt_85;
-    kink.x85_lower = Xl_85;
+    KinkCST = kink.CST;
     
     x_kink = 10.36/tand(90-lambda_1);
     x_tip = x_kink + (J-10.36)/(tand(90-lambda_2));
@@ -77,7 +69,7 @@ function [ccL, cM] = loads(A_root, A_tip, c_root, c_tip, lambda_1, lambda_2, J,.
     Res = Q3D_solver(AC);
 
 %% Write EMWET .load file for next run 
-    AS.Y = linspace(0,1,20);
+    AS.Y = linspace(0,1,8);
     AS.L = interp1(Res.Wing.Yst,Res.Wing.ccl*q,AS.Y*J,'spline'); %lift distribution
     AS.T = interp1(Res.Wing.Yst,Res.Wing.cm_c4.*Res.Wing.chord*q*MAC,AS.Y*J,'spline'); % pitching moment distribution
     
