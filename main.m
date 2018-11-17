@@ -45,11 +45,11 @@ upper_bounds_normalized = [0.2015; 0.3209; 0.2427; 0.3471; 0.2001; 0.3099;
 options.Display         = 'iter';
 options.Algorithm       = 'sqp';
 options.FunValCheck     = 'off';
-options.DiffMinChange   = 1e-6;         % Minimum change while gradient searching
+options.DiffMinChange   = 1e-4;         % Minimum change while gradient searching
 options.DiffMaxChange   = 5e-2;         % Maximum change while gradient searching
-options.TolCon          = 1e-1;         % Maximum difference between two subsequent constraint vectors [c and ceq]
-options.TolFun          = 1e-1;         % Maximum difference between two subsequent objective value
-options.TolX            = 1e-1;         % Maximum difference between two subsequent design vectors
+options.TolCon          = 1e-3;         % Maximum difference between two subsequent constraint vectors [c and ceq]
+options.TolFun          = 1e-3;         % Maximum difference between two subsequent objective value
+options.TolX            = 1e-3;         % Maximum difference between two subsequent design vectors
 options.MaxIter         = 1e3;          % Maximum iterations
 options.PlotFcns        = {@optimplotfval, @optimplotx, @optimplotfirstorderopt};
 
