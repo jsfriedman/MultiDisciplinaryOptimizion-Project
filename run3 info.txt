@@ -1,0 +1,9 @@
+ Iter  Func-count            Fval   Feasibility   Step Length       Norm of   First-order  
+                                                                       step    optimality
+7         426    8.429084e+04     2.399e-01     9.095e-07     1.411e-06     1.628e+03  
+
+Local minimum possible. Constraints satisfied.
+
+fmincon stopped because the size of the current step is less than
+the selected value of the step size tolerance and constraints are 
+satisfied to within the selected value of the constraint tolerance.

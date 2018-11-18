@@ -1,7 +1,5 @@
 function [f] = Optim(x)
     % set design variables equal to design variables from the
-    disp('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
-    disp(x)
     A_root = x(1:12);
     A_tip = x(13:24);
     c_root = x(25);

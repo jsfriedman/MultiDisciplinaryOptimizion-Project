@@ -9,10 +9,9 @@ clc;
 % Run this file
 
 %% Initial Values (including "guess" variables)
-
+tic
 % initialize normalized values
- x0 = ones(52,1);
- %x0(1:24) = initial_values(1:24);
+ x0 = ones(52,1) * 1.05;
  x0(27:28) = 35/100;
  x0(30:32) = 0;
 
@@ -53,11 +52,11 @@ upper_bounds_normalized = [1.15871190339275;1.14036958066809;1.20926756352765;1.
 options.Display         = 'iter';
 options.Algorithm       = 'sqp';
 options.FunValCheck     = 'off';
-options.DiffMinChange   = 1e-2;         % Minimum change while gradient searching
-options.DiffMaxChange   = 5e-2;         % Maximum change while gradient searching
-options.TolCon          = 1e-3;         % Maximum difference between two subsequent constraint vectors [c and ceq]
-options.TolFun          = 1e-3;         % Maximum difference between two subsequent objective value
-options.TolX            = 1e-3;         % Maximum difference between two subsequent design vectors
+options.DiffMinChange   = 1e-6;         % Minimum change while gradient searching
+options.DiffMaxChange   = 5e-1;         % Maximum change while gradient searching
+options.TolCon          = 1e-4;         % Maximum difference between two subsequent constraint vectors [c and ceq]
+options.TolFun          = 1e-4;         % Maximum difference between two subsequent objective value
+options.TolX            = 1e-6;         % Maximum difference between two subsequent design vectors
 options.MaxIter         = 1e3;          % Maximum iterations
 options.PlotFcns        = {@optimplotfval, @optimplotx, @optimplotfirstorderopt};
 
@@ -89,3 +88,4 @@ couplings.cM8_c = initial_values(52);
 
 %% fmincon
 [x,FVAL,EXITFLAG,OUTPUT] = fmincon(@Optim,x0,[],[],[],[],lower_bounds_normalized,upper_bounds_normalized,@constraints,options);
+toc

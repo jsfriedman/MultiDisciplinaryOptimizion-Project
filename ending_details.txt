@@ -1,0 +1,3 @@
+ Iter  Func-count            Fval   Feasibility   Step Length       Norm of   First-order  
+                                                                       step    optimality
+    4         221    9.705990e+04     2.208e-01     1.000e+00     1.290e+00     1.404e+09  
